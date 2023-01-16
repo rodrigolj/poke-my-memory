@@ -4,43 +4,52 @@ import styled from "styled-components";
 const Container = styled.div`
 display: flex;
 flex-direction: column;
-flex-wrap: wrap;
+flex-wrap: nowrap;
 align-items: center;
+flex-grow: 9;
+row-gap: 0.5em;
+
 height: 100%;
-margin: 1em 0 1em 1em;
-width: calc(90vw - 2em);
-background: white;
+margin: 1em;
 padding: 1em;
-`;
+overflow-y: auto;
+
+background: white;
+`
 
 const Title = styled.h1`
 font-size: 2.4em;
 font-weight: thin;
 color: #0075BE;
-`;
+`
 
-const Input = styled.input`
+const NameBox = styled.span`
+padding: 0.5em;
+`
+
+const PokemonImage = styled.img`
+min-height: 150px;
+min-width: 150px;
+max-height: 30%;
+max-width: 30%;
+`
+
+const TextInput = styled.input`
 border: 2px solid #0075BE;
 border-radius: 5px;
 padding: 0.5em;
-`;
+`
 
 export const Game = () => {
-    // To use useState, you must set a const
-    // with the name as an array containing
-    // first the var name and second the method
-    //
-    // useState here can have a initial value
-    // which, in this case, is an empty string
+
     const [input, setInput] = useState("")
     const [pokemon, setPokemon] = useState({} as any)
-    console.log("Pokemon: ", pokemon);
 
-    const randomPokemon = () => {
+    const rngesus = () => {
         return Math.floor(Math.random() * (500 - 1 + 1) + 1)
     }
 
-    const [randomId, setRandomId] = useState(randomPokemon())
+    const [randomId, setRandomId] = useState(rngesus())
 
     useEffect(() => {
         fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
@@ -48,22 +57,34 @@ export const Game = () => {
             .then((data) => setPokemon(data))
     }, [randomId])
 
-    const handleOnChange = (value:string) => {
-        // Validations of pokemon name value
+    const [isWrong, setIsWrong] = useState(false)
+
+    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let value = event.target.value
         setInput(value)
+        value.split("").map((letter: string, index: number) => {
+            letter === pokemon.name.split("")[index] ? setIsWrong(false) : setIsWrong(true)
+        })
+        if (value === pokemon.name) {
+            setRandomId(rngesus())
+            setInput("")
+        }
     }
+
+    const toProperCase = function(name: string) {
+        if (!!name) {
+            return name[0].toUpperCase() + name.substring(1).toLowerCase()
+        }
+    }
+
 
     return (
         <Container>
             <Title>Quem &eacute; esse Pok&eacute;mon?</Title>
-            <img src={`https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${randomId}.svg`} alt={pokemon.name} />
-            <form>
-                <Input id="pokemon-name" type={"text"} autoFocus onChange={(event) => {
-                    handleOnChange(event.target.value)
-                }
-                } />
-            </form>
+            <PokemonImage src={`https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${randomId}.svg`} alt={pokemon.name} />
+            <NameBox>{pokemon.name}</NameBox>
+            <TextInput id="pokemon-name" type="text" value={input} onChange={(e) => handleOnChange(e)} autoFocus className={ isWrong ? 'shake' : ''} />
             <p>Nota: Os nomes seguem a grafia em ingl&ecirc;s</p>
         </Container>
     );
-};
+}
