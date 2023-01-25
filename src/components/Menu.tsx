@@ -28,7 +28,7 @@ text-align: center;
 
 const ListItem = styled.li`
 `
-const Link = styled.a`
+const Button = styled.button`
 text-decoration: none;
 color: #0A285F;
 font-weight: bold;
@@ -40,14 +40,14 @@ color: #0075BE;
 }
 `
 
-export const Menu = () => {
+export const Menu = ({setGame}: any) => {
     return (
         <Container>
             <MenuTitle>Jogos</MenuTitle>
             <UnorderedList>
-                <ListItem><Link href="#">Jogo 1</Link></ListItem>
-                <ListItem><Link href="#">Jogo 2</Link></ListItem>
-                <ListItem><Link href="#">Jogo 3</Link></ListItem>
+                <ListItem><Button onClick={() => setGame(1)}>Jogo 1</Button></ListItem>
+                <ListItem><Button onClick={() => setGame(2)}>Jogo 2</Button></ListItem>
+                <ListItem><Button onClick={() => setGame(3)}>Jogo 3</Button></ListItem>
             </UnorderedList>
         </Container>
     )
