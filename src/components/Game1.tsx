@@ -2,59 +2,53 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-display: grid;
-grid-template-columns: 1fr 1fr;
-width: 90%;
+    display: grid;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    row-gap: 0;
+    align-items: start;
+    width: 22rem;
+    padding: 1rem;
 `
 
-const LeftContainer = styled.div`
-display: flex;
-flex-direction: column;
-flex-wrap: nowrap;
-align-items: center;
-margin-top: 1em;
-
-height: 100%;
-padding: 1em;
-overflow-y: auto;
-
-background: white;
-`
-const RightContainer = styled.div`
-display: flex;
-flex-direction: column;
-flex-wrap: nowrap;
-align-items: center;
-margin-top: 1em;
-
-height: 100%;
-padding: 1em;
-overflow-y: auto;
-
-background: white;
+const Section = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    min-height: 4rem;
+    overflow: hidden;
 `
 
 const Title = styled.h1`
-font-size: 2.4em;
-font-weight: thin;
-color: #0075BE;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 100;
+    color: #0075BE;
 `
 
 const NameBox = styled.span`
-padding: 0.5em;
+    padding: 2rem;
 `
 
 const PokemonImage = styled.img`
-min-height: 150px;
-min-width: 150px;
-max-height: 30%;
-max-width: 30%;
+    max-height: 8rem;
+    max-width: 8rem;
 `
 
 const TextInput = styled.input`
-border: 2px solid #0075BE;
-border-radius: 5px;
-padding: 0.5em;
+    border: 0.125rem;
+    border-style: solid;
+    border-color: #0075BE;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+`
+
+const Warning = styled.p`
+    font-size: 0.75em;
+    color: #0A285F;
+    text-align: center;
 `
 
 export const Game1 = () => {
@@ -102,20 +96,18 @@ export const Game1 = () => {
 
     return (
         <Container>
-            <LeftContainer>
+            <Section>
                 <Title>Quem &eacute; esse Pok&eacute;mon?</Title>
                 <PokemonImage src={`https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${randomId}.svg`} alt={pokemon.name} />
-                <NameBox>{pokemon.name}</NameBox>
                 <TextInput id="pokemon-name" type="text" value={input} onChange={(e) => handleOnChange(e)} autoFocus className={isWrong ? 'shake' : ''} />
-                <p>Nota: Os nomes seguem a grafia em ingl&ecirc;s</p>
-            </LeftContainer>
-            <RightContainer>Você acertou:
+                <Warning>Nota: Os nomes seguem a grafia em ingl&ecirc;s</Warning>
+                <p>Você acertou:</p>
                 <ul>
                     {
-                        pokemons.map((p) => <li>{p}</li>)
+                        pokemons.map((p) => <li>{toProperCase(p)}</li>)
                     }
                 </ul>
-            </RightContainer>
+            </Section>
         </Container>
     );
 }

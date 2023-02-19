@@ -1,15 +1,18 @@
 import { Header as Nav } from './components/Header'
 import { Content } from './components/Content'
+import styled from 'styled-components'
+
+const Wrap = styled.div`
+background: #0A285F;
+height: 100%;
+`
 
 function App() {
     return (
-        // isto é um fractal
-        <>
-            <div style={{ display: "flex", flexDirection: "row", background: "#0A285F" }}>
-                <Nav />
-                <Content />
-            </div>
-        </>
+        <Wrap>
+            <Nav />
+            <Content />
+        </Wrap>
     )
 }
 
