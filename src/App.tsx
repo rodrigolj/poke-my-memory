@@ -1,5 +1,5 @@
 import { Header as Nav } from './components/Header'
-import { Content } from './components/Content'
+import { Content } from './pages/Content'
 import styled from 'styled-components'
 
 const Wrap = styled.div`

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import TextInput from "../components/TextInput";
 
 const Container = styled.div`
     display: grid;
@@ -36,15 +37,6 @@ const PokemonImage = styled.img`
     max-height: 8rem;
     max-width: 8rem;
 `
-
-const TextInput = styled.input`
-    border: 0.125rem;
-    border-style: solid;
-    border-color: #0075BE;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
-`
-
 const Warning = styled.p`
     font-size: 0.75em;
     color: #0A285F;
