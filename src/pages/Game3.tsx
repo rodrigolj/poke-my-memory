@@ -102,20 +102,7 @@ export const Game3 = () => {
 
     return (
         <Container>
-            <LeftContainer>
-                <Title>Quem &eacute; esse Pok&eacute;mon?</Title>
-                <PokemonImage src={`https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${randomId}.svg`} alt={pokemon.name} />
-                <NameBox>{pokemon.name}</NameBox>
-                <TextInput id="pokemon-name" type="text" value={input} onChange={(e) => handleOnChange(e)} autoFocus className={isWrong ? 'shake' : ''} />
-                <p>Nota: Os nomes seguem a grafia em ingl&ecirc;s</p>
-            </LeftContainer>
-            <RightContainer>Você acertou:
-                <ul>
-                    {
-                        pokemons.map((p) => <li>{p}</li>)
-                    }
-                </ul>
-            </RightContainer>
+            <Title>Game 3</Title>
         </Container>
     );
 }

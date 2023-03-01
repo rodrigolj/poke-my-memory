@@ -1,54 +1,51 @@
 import styled from "styled-components";
+import ButtonComponent from "./Button";
 
-// if setting size, then it's better to use Container
-// if it's not necessary, just use a fractal
-const Container = styled.div`
+const Wrap = styled.div`
 display: flex;
-flex-flow: column wrap;
-flex-grow: 1;
-
-padding-top: 2vh;
-margin: 1em;
-
-background: white;
+justify-content: flex-end;
 `
 
-const MenuTitle = styled.h2`
-font-size: 1.2rem;
-font-weight: thin;
-text-align: center;
-margin: 2vh;
+
+const Container = styled.div`
+position: absolute;
+z-index: 10;
+display: flex;
+flex-flow: column wrap;
+background: white;
+border: 1px solid black;
+width: fit-content;
+padding: 1rem;
+margin-right: 0.5rem;
+margin-top: -1rem;
 `
 
 const UnorderedList = styled.ul`
-padding: 0;
+display: flex;
+flex-flow: column nowrap;
+gap: 0.5rem;
 list-style-type: none;
 text-align: center;
 `
 
 const ListItem = styled.li`
 `
-const Button = styled.button`
-text-decoration: none;
-color: #0A285F;
-font-weight: bold;
-&:hover {
-text-decoration: underline;
-}
-&:active {
-color: #0075BE;
-}
-`
 
-export const Menu = ({setGame}: any) => {
+export function Menu({setGameNumber}: {setGameNumber: React.Dispatch<React.SetStateAction<number>>}) {
+
+    const setGame1 = () => { setGameNumber(1) }
+    const setGame2 = () => { setGameNumber(2) }
+    const setGame3 = () => { setGameNumber(3) }
+
     return (
-        <Container>
-            <MenuTitle>Jogos</MenuTitle>
-            <UnorderedList>
-                <ListItem><Button onClick={() => setGame(1)}>Jogo 1</Button></ListItem>
-                <ListItem><Button onClick={() => setGame(2)}>Jogo 2</Button></ListItem>
-                <ListItem><Button onClick={() => setGame(3)}>Jogo 3</Button></ListItem>
-            </UnorderedList>
-        </Container>
+        <Wrap>
+            <Container>
+                <UnorderedList>
+                    <ListItem><ButtonComponent onClick={setGame1}>Quem é este Pokémon?</ButtonComponent></ListItem>
+                    <ListItem><ButtonComponent onClick={setGame2}>Game 2</ButtonComponent></ListItem>
+                    <ListItem><ButtonComponent onClick={setGame3}>Game 3</ButtonComponent></ListItem>
+                </UnorderedList>
+            </Container>
+        </Wrap>
     )
 }

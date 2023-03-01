@@ -96,7 +96,7 @@ export const Game1 = () => {
                 <p>Você acertou:</p>
                 <ul>
                     {
-                        pokemons.map((p) => <li>{toProperCase(p)}</li>)
+                        pokemons.map((p) => <li key={p}>{toProperCase(p)}</li>)
                     }
                 </ul>
             </Section>
