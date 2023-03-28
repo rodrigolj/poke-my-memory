@@ -40,33 +40,104 @@ const Warning = styled.p`
 `;
 
 export const Game1 = () => {
+    // Type declarations
+
+    type PokeAPIReturn = {
+        id: number;
+        name: string;
+    }
+
+    type Ranges = {
+        [key: number]: {
+            baseId: number;
+            maxId: number;
+        }
+    }
+
     // Dealing with the Pokémon selection
-    const pokemonQueue = {};
-    const imageQueue = [];
-    const usedNumbers = [];
 
-    function fetchPokemon() {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                pokemonQueue[data.id] = ``
-
-            });
+    // This defines the ranges for each generation
+    const pokemonRanges: Ranges = {
+        1: {
+            baseId: 1,
+            maxId: 151,
+        },
+        2: {
+            baseId: 152,
+            maxId: 251,
+        },
+        3: {
+            baseId: 252,
+            maxId: 386,
+        },
+        4: {
+            baseId: 387,
+            maxId: 493,
+        },
+        5: {
+            baseId: 494,
+            maxId: 649,
+        },
+        6: {
+            baseId: 650,
+            maxId: 721,
+        },
+        7: {
+            baseId: 722,
+            maxId: 809,
+        },
+        8: {
+            baseId: 810,
+            maxId: 905,
+        },
     }
 
 
-    const randomNumberGenerator = () => {
-        return Math.floor(Math.random() * (500 - 1 + 1) + 1);
-    };
+    interface PokemonQueue {
+        [key: number]: { name: string, image: string };
+    }
 
-    // Definining states
+    // Defining queue and checking if same Pokémon
+    // wasn't selected before
+    const pokemonQueue: PokemonQueue = {};
+    const usedNumbers: number[] = [];
+
+    // Fetching the id and the image of the Pokémon
+    function fetchPokemon(randomId: number) {
+        fetch(`{https://pokeapi.co/api/v2/pokemon/${randomId}`)
+            .then((response) => response.json() as Promise<PokeAPIReturn>)
+            .then((data) => {
+                pokemonQueue[data.id] = { name: data.name, image: `../public/assets/sprites/spirtes/pokemon/other/dream_world/${data.id}.svg` };
+            });
+    }
+
+    // Generates a random number inside the range of the selected generations
+    // and checks if it was already used
+    function randomNumberGenerator(baseGen: number, maxGen: number) {
+        const baseId = pokemonRanges[baseGen].baseId;
+        const maxId = pokemonRanges[maxGen].maxId;
+
+        const generatedNumber: number = Math.floor(Math.random() * (maxId - baseId + 1) + baseId);
+
+        if (usedNumbers.includes(generatedNumber)) {
+            randomNumberGenerator(baseGen, maxGen);
+        } else {
+            usedNumbers.push(generatedNumber);
+            fetchPokemon(generatedNumber);
+            setPokemon(pokemonQueue[generatedNumber]);
+        }
+
+    }
+
+    // States on generating Pokémons
+    const [baseGen, setBaseGen] = useState(1);
+    const [maxGen, setMaxGen] = useState(1);
+    const [pokemon, setPokemon] = useState(randomNumberGenerator(baseGen, maxGen));
+
+    // States that run the game
     const [input, setInput] = useState('');
-    const [pokemon, setPokemon] = useState({} as any);
-    const [randomId, setRandomId] = useState();
     const [isWrong, setIsWrong] = useState(false);
     const [pokemons, setPokemons] = useState<string[]>([]);
-
-    useEffect(() => {}, [randomId]);
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = event.target.value;
@@ -78,14 +149,14 @@ export const Game1 = () => {
         });
         if (value === pokemon.name) {
             setPokemons([...pokemons, pokemon.name]);
-            setRandomId(randomNumberGenerator());
+            setRandomId(randomNumberGenerator(baseGen, maxGen));
             setInput('');
         }
     };
 
     console.log(pokemons);
 
-    const toProperCase = function (name: string) {
+    const toProperCase = function(name: string) {
         if (!!name) {
             return name[0].toUpperCase() + name.substring(1).toLowerCase();
         }
@@ -95,14 +166,12 @@ export const Game1 = () => {
         <Container>
             <Section>
                 <Title>Quem &eacute; esse Pok&eacute;mon?</Title>
-                <PokemonImage
-                    alt={pokemon.name}
-                />
+                <PokemonImage alt={pokemon.name} />
                 <TextInput
                     id="pokemon-name"
                     type="text"
                     value={input}
-                    onChange={(e) => handleOnChange(e)}
+                    onChange={(ev) => handleOnChange(ev)}
                     autoFocus
                     className={isWrong ? 'shake' : ''}
                 />
@@ -111,8 +180,8 @@ export const Game1 = () => {
                 </Warning>
                 <p>Você acertou:</p>
                 <ul>
-                    {pokemons.map((p) => (
-                        <li key={p}>{toProperCase(p)}</li>
+                    {pokemons.map((pkmn) => (
+                        <li key={pkmn}>{toProperCase(pkmn)}</li>
                     ))}
                 </ul>
             </Section>
