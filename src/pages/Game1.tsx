@@ -109,7 +109,7 @@ export const Game1 = () => {
         const pokemonData: Pokemon = {
             id: data.id,
             name: data.name,
-            image: `/src/public/assets/sprites/sprites/pokemon/other/dream-world/${data.id}.svg`
+            image: `/sprites/${data.id}.svg`
         };
 
         return pokemonData;

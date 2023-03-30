@@ -30,7 +30,7 @@ export const Header = ({ gameNumber, setGameNumber }: HeaderProps) => {
         <>
             <Container>
                 <Logo
-                    src="/src/public/pokescramble.png"
+                    src="/pokescramble.png"
                     alt="Pokescramble Logo"
                 />
                 <MenuButton
