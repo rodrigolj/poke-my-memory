@@ -7,6 +7,7 @@ specifiers:
   '@babel/preset-typescript': ^7.18.6
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
+  '@total-typescript/ts-reset': ^0.4.2
   '@types/jest': ^29.2.4
   '@types/node': ^18.11.17
   '@types/react': ^18.0.26
@@ -52,6 +53,7 @@ devDependencies:
   '@babel/preset-typescript': 7.21.0_@babel+core@7.21.0
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
+  '@total-typescript/ts-reset': 0.4.2
   '@types/jest': 29.4.0
   '@types/node': 18.14.0
   '@types/react': 18.0.28
@@ -1990,6 +1992,10 @@ packages:
   /@tootallnate/once/2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
+    dev: true
+
+  /@total-typescript/ts-reset/0.4.2:
+    resolution: {integrity: sha512-vqd7ZUDSrXFVT1n8b2kc3LnklncDQFPvR58yUS1kEP23/nHPAO9l1lMjUfnPrXYYk4Hj54rrLKMW5ipwk7k09A==}
     dev: true
 
   /@types/aria-query/5.0.1:

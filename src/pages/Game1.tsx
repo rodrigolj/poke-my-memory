@@ -1,3 +1,4 @@
+import '@total-typescript/ts-reset';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TextInput from '../components/TextInput';
@@ -39,100 +40,122 @@ const Warning = styled.p`
     text-align: center;
 `;
 
+type Pokemon = {
+    id: number;
+    name: string;
+    image: string;
+};
+
+type PokeapiResponse = {
+    id: number;
+    name: string;
+};
+
+type Ranges = {
+    [key: number]: {
+        baseId: number;
+        maxId: number;
+    };
+};
+
 export const Game1 = () => {
-    // Type declarations
-
-    type PokeAPIReturn = {
-        id: number;
-        name: string;
-    }
-
-    type Ranges = {
-        [key: number]: {
-            baseId: number;
-            maxId: number;
-        }
-    }
-
-    // Dealing with the Pokémon selection
-
-    // This defines the ranges for each generation
     const pokemonRanges: Ranges = {
         1: {
             baseId: 1,
-            maxId: 151,
+            maxId: 151
         },
         2: {
             baseId: 152,
-            maxId: 251,
+            maxId: 251
         },
         3: {
             baseId: 252,
-            maxId: 386,
+            maxId: 386
         },
         4: {
             baseId: 387,
-            maxId: 493,
+            maxId: 493
         },
         5: {
             baseId: 494,
-            maxId: 649,
+            maxId: 649
         },
         6: {
             baseId: 650,
-            maxId: 721,
+            maxId: 721
         },
         7: {
             baseId: 722,
-            maxId: 809,
+            maxId: 809
         },
         8: {
             baseId: 810,
-            maxId: 905,
-        },
-    }
-
-
-    interface PokemonQueue {
-        [key: number]: { name: string, image: string };
-    }
+            maxId: 905
+        }
+    };
 
     // Defining queue and checking if same Pokémon
     // wasn't selected before
-    const pokemonQueue: PokemonQueue = {};
-    const usedNumbers: number[] = [];
+    let pokemonQueue: Array<Pokemon> = [];
+    let usedNumbers: Array<number> = [];
 
     // Fetching the id and the image of the Pokémon
-    function fetchPokemon(randomId: number) {
-        fetch(`{https://pokeapi.co/api/v2/pokemon/${randomId}`)
-            .then((response) => response.json() as Promise<PokeAPIReturn>)
-            .then((data) => {
-                pokemonQueue[data.id] = { name: data.name, image: `../public/assets/sprites/spirtes/pokemon/other/dream_world/${data.id}.svg` };
-            });
+    async function fetchPokemon(randomId: number): Promise<Pokemon> {
+        const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${randomId}`
+        );
+        const data = (await response.json()) as Pokemon;
+
+        const pokemonData: Pokemon = {
+            id: data.id,
+            name: data.name,
+            image: `/src/public/assets/sprites/sprites/pokemon/other/dream-world/${data.id}.svg`
+        };
+
+        return pokemonData;
     }
 
     // Generates a random number inside the range of the selected generations
     // and checks if it was already used
-    function randomNumberGenerator(baseGen: number, maxGen: number) {
+    async function randomNumberGenerator(
+        baseGen: number,
+        maxGen: number
+    ): Promise<number> {
         const baseId = pokemonRanges[baseGen].baseId;
         const maxId = pokemonRanges[maxGen].maxId;
 
-        const generatedNumber: number = Math.floor(Math.random() * (maxId - baseId + 1) + baseId);
+        const generatedNumber: number = Math.floor(
+            Math.random() * (maxId - baseId + 1) + baseId
+        );
 
         if (usedNumbers.includes(generatedNumber)) {
             randomNumberGenerator(baseGen, maxGen);
-        } else {
-            usedNumbers.push(generatedNumber);
-            fetchPokemon(generatedNumber);
-            setPokemon(pokemonQueue[generatedNumber]);
         }
+        return generatedNumber;
+    }
 
+    async function definePokemon(baseGen: number, maxGen: number) {
+        const randomId = await randomNumberGenerator(baseGen, maxGen);
+        const pokemon = await fetchPokemon(randomId);
+        usedNumbers.push(randomId);
+        pokemonQueue.push(pokemon);
+        return pokemon;
     }
 
     // States on generating Pokémons
     const [baseGen, setBaseGen] = useState(1);
     const [maxGen, setMaxGen] = useState(1);
-    const [pokemon, setPokemon] = useState(randomNumberGenerator(baseGen, maxGen));
+    const [isPokemonLoaded, setIsPokemonLoaded] = useState(false);
+    const [pokemon, setPokemon] = useState({} as Pokemon);
+
+    useEffect(() => {
+        if (!isPokemonLoaded) {
+            definePokemon(baseGen, maxGen).then((pokemon) => {
+                setPokemon(pokemon);
+                setIsPokemonLoaded(true);
+            });
+        }
+    });
 
     // States that run the game
     const [input, setInput] = useState('');
@@ -140,6 +163,7 @@ export const Game1 = () => {
     const [pokemons, setPokemons] = useState<string[]>([]);
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault;
         let value = event.target.value;
         setInput(value);
         value.split('').map((letter: string, index: number) => {
@@ -149,14 +173,13 @@ export const Game1 = () => {
         });
         if (value === pokemon.name) {
             setPokemons([...pokemons, pokemon.name]);
-            setRandomId(randomNumberGenerator(baseGen, maxGen));
+            pokemonQueue.shift();
+            setIsPokemonLoaded(false);
             setInput('');
         }
     };
 
-    console.log(pokemons);
-
-    const toProperCase = function(name: string) {
+    const toProperCase = function (name: string) {
         if (!!name) {
             return name[0].toUpperCase() + name.substring(1).toLowerCase();
         }
@@ -166,7 +189,7 @@ export const Game1 = () => {
         <Container>
             <Section>
                 <Title>Quem &eacute; esse Pok&eacute;mon?</Title>
-                <PokemonImage alt={pokemon.name} />
+                <PokemonImage alt={pokemon.name} src={pokemon.image} />
                 <TextInput
                     id="pokemon-name"
                     type="text"
