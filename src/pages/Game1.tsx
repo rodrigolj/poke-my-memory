@@ -20,7 +20,7 @@ const Section = styled.div`
     align-items: center;
     padding: 1rem;
     min-height: 4rem;
-    overflow: hidden;
+    overflow: auto;
 `;
 
 const Title = styled.h1`
@@ -155,7 +155,7 @@ export const Game1 = () => {
                 setIsPokemonLoaded(true);
             });
         }
-    });
+    },[isPokemonLoaded]);
 
     // States that run the game
     const [input, setInput] = useState('');
