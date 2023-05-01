@@ -1,41 +1,40 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ButtonComponent from './Button';
 
-const Opaque = styled.div`
+const OpaqueBackground = styled.div`
     position: absolute;
-    z-index: 5;
-    background: rgba(0, 0, 0, 0.4);
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
+
+    z-index: 1;
+    transition: background-color .5 ease-in-out;
+
+    &.show {
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    &.hide {
+        background-color: rgba(0,0,0,0);
+    }
 `;
 
-const Wrap = styled.div`
-    display: flex;
-    justify-content: flex-end;
-`;
-
-const Container = styled.div`
+const Nav = styled.nav`
     position: absolute;
-    z-index: 10;
-    top: -1rem;
-    left: 101vw;
-
-    animation-name: slide;
-    animation-duration: 1s;
-    animation-timing-function: ease-in-out;
-    animation-delay: 0.5s;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-
-    display: flex;
-    flex-flow: column wrap;
-
-    background: white;
-    border: 1px solid black;
-    width: 12rem;
+    z-index: 5;
+    background: #fff;
     padding: 1rem;
+    top: -0.5rem;
+
+    transition: all 0.5s ease-in-out;
+
+    &.show {
+        right: 0.5rem;
+    }
+
+    &.hide {
+        right: -20rem;
+    }
 `;
 
 const UnorderedList = styled.ul`
@@ -54,39 +53,31 @@ type MenuProps = {
 };
 
 export function Menu({ isMenuOpen, setGameNumber }: MenuProps) {
-    const setGame1 = () => {
-        setGameNumber(1);
-    };
-    const setGame2 = () => {
-        setGameNumber(2);
-    };
-    const setGame3 = () => {
-        setGameNumber(3);
+    const setGame = (number: number) => {
+        setGameNumber(number);
     };
 
     return (
-        <Opaque>
-            <Wrap>
-                <Container>
-                    <UnorderedList>
-                        <ListItem>
-                            <ButtonComponent onClick={setGame1}>
-                                Quem é este Pokémon?
-                            </ButtonComponent>
-                        </ListItem>
-                        <ListItem>
-                            <ButtonComponent onClick={setGame2}>
-                                Game 2
-                            </ButtonComponent>
-                        </ListItem>
-                        <ListItem>
-                            <ButtonComponent onClick={setGame3}>
-                                Game 3
-                            </ButtonComponent>
-                        </ListItem>
-                    </UnorderedList>
-                </Container>
-            </Wrap>
-        </Opaque>
+        <OpaqueBackground className={`${isMenuOpen ? 'show' : 'hide'}`}>
+        <Nav className={`${isMenuOpen ? 'show' : 'hide'}`}>
+            <UnorderedList>
+                <ListItem>
+                    <ButtonComponent onClick={() => setGame(1)}>
+                        Quem é este Pokémon?
+                    </ButtonComponent>
+                </ListItem>
+                <ListItem>
+                    <ButtonComponent onClick={() => setGame(2)}>
+                        Game 2
+                    </ButtonComponent>
+                </ListItem>
+                <ListItem>
+                    <ButtonComponent onClick={() => setGame(3)}>
+                        Game 3
+                    </ButtonComponent>
+                </ListItem>
+            </UnorderedList>
+        </Nav>
+</OpaqueBackground>
     );
 }

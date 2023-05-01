@@ -29,19 +29,14 @@ export const Header = ({ gameNumber, setGameNumber }: HeaderProps) => {
     return (
         <>
             <Container>
-                <Logo
-                    src="/pokescramble.png"
-                    alt="Pokescramble Logo"
-                />
+                <Logo src="/pokescramble.png" alt="Pokescramble Logo" />
                 <MenuButton
                     color="#0075BE"
                     isMenuOpen={isMenuOpen}
                     setMenuOpen={setMenuOpen}
                 />
             </Container>
-            {!!isMenuOpen && (
-                <Menu isMenuOpen={isMenuOpen} setGameNumber={setGameNumber} />
-            )}
+            <Menu isMenuOpen={isMenuOpen} setGameNumber={setGameNumber} />
         </>
     );
 };
