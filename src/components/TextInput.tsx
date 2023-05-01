@@ -6,6 +6,7 @@ const TextInput = styled.input`
     border-color: #0075BE;
     border-radius: 0.25rem;
     padding: 0.25rem;
+    width: 100%;
 `
 
 export default TextInput;
