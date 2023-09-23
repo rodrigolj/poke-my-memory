@@ -8,14 +8,14 @@ const OpaqueBackground = styled.div`
     overflow: hidden;
 
     z-index: 1;
-    transition: background-color .5 ease-in-out;
+    transition: background-color 0.5 ease-in-out;
 
     &.show {
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0, 0, 0, 0.4);
     }
 
     &.hide {
-        background-color: rgba(0,0,0,0);
+        background-color: rgba(0, 0, 0, 0);
     }
 `;
 
@@ -59,25 +59,25 @@ export function Menu({ isMenuOpen, setGameNumber }: MenuProps) {
 
     return (
         <OpaqueBackground className={`${isMenuOpen ? 'show' : 'hide'}`}>
-        <Nav className={`${isMenuOpen ? 'show' : 'hide'}`}>
-            <UnorderedList>
-                <ListItem>
-                    <ButtonComponent onClick={() => setGame(1)}>
-                        Quem é este Pokémon?
-                    </ButtonComponent>
-                </ListItem>
-                <ListItem>
-                    <ButtonComponent onClick={() => setGame(2)}>
-                        Game 2
-                    </ButtonComponent>
-                </ListItem>
-                <ListItem>
-                    <ButtonComponent onClick={() => setGame(3)}>
-                        Game 3
-                    </ButtonComponent>
-                </ListItem>
-            </UnorderedList>
-        </Nav>
-</OpaqueBackground>
+            <Nav className={`${isMenuOpen ? 'show' : 'hide'}`}>
+                <UnorderedList>
+                    <ListItem>
+                        <ButtonComponent onClick={() => setGame(1)}>
+                            Quem é este Pokémon?
+                        </ButtonComponent>
+                    </ListItem>
+                    <ListItem>
+                        <ButtonComponent onClick={() => setGame(2)}>
+                            Game 2
+                        </ButtonComponent>
+                    </ListItem>
+                    <ListItem>
+                        <ButtonComponent onClick={() => setGame(3)}>
+                            Game 3
+                        </ButtonComponent>
+                    </ListItem>
+                </UnorderedList>
+            </Nav>
+        </OpaqueBackground>
     );
 }

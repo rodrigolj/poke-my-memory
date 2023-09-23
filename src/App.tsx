@@ -12,10 +12,10 @@ function App() {
     const [gameNumber, setGameNumber] = useState<number>(1);
 
     return (
-            <Wrap>
-                <Nav gameNumber={gameNumber} setGameNumber={setGameNumber} />
-                <Content gameNumber={gameNumber} />
-            </Wrap>
+        <Wrap>
+            <Nav gameNumber={gameNumber} setGameNumber={setGameNumber} />
+            <Content gameNumber={gameNumber} />
+        </Wrap>
     );
 }
 
