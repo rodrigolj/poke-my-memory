@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import MenuButton from './MenuButton';
-import { Dispatch, useState } from 'react';
+import { useReducer, useState } from 'react';
 import { Menu } from './Menu';
 
 const Container = styled.div`
@@ -18,12 +18,7 @@ const Logo = styled.img`
     height: 3.5rem;
 `;
 
-type HeaderProps = {
-    gameNumber: number;
-    setGameNumber: Dispatch<React.SetStateAction<number>>;
-};
-
-export const Header = ({ gameNumber, setGameNumber }: HeaderProps) => {
+export const Nav = () => {
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
 
     return (
@@ -36,7 +31,7 @@ export const Header = ({ gameNumber, setGameNumber }: HeaderProps) => {
                     setMenuOpen={setMenuOpen}
                 />
             </Container>
-            <Menu isMenuOpen={isMenuOpen} setGameNumber={setGameNumber} />
+            <Menu isMenuOpen={isMenuOpen} />
         </>
     );
 };

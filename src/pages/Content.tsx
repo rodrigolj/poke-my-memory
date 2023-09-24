@@ -12,7 +12,7 @@ const Container = styled.div`
     height: calc(44rem); // 4 do header e 2 da margem
 `;
 
-export function Content({ gameNumber }: { gameNumber: number }) {
+export function Content() {
     return (
         <>
             <Container>

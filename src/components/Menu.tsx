@@ -1,5 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import ButtonComponent from './Button';
+import { useGamesDispatch } from '../utils/GamesContext';
 
 const OpaqueBackground = styled.div`
     position: absolute;
@@ -47,32 +48,35 @@ const UnorderedList = styled.ul`
 
 const ListItem = styled.li``;
 
-type MenuProps = {
-    isMenuOpen: boolean;
-    setGameNumber: React.Dispatch<React.SetStateAction<number>>;
-};
-
-export function Menu({ isMenuOpen, setGameNumber }: MenuProps) {
-    const setGame = (number: number) => {
-        setGameNumber(number);
-    };
-
+export function Menu(isMenuOpen: boolean) {
     return (
         <OpaqueBackground className={`${isMenuOpen ? 'show' : 'hide'}`}>
             <Nav className={`${isMenuOpen ? 'show' : 'hide'}`}>
                 <UnorderedList>
                     <ListItem>
-                        <ButtonComponent onClick={() => setGame(1)}>
+                        <ButtonComponent
+                            onClick={() =>
+                                dispatch({ type: 'change', game: 1 })
+                            }
+                        >
                             Quem é este Pokémon?
                         </ButtonComponent>
                     </ListItem>
                     <ListItem>
-                        <ButtonComponent onClick={() => setGame(2)}>
+                        <ButtonComponent
+                            onClick={() =>
+                                dispatch({ type: 'change', game: 2 })
+                            }
+                        >
                             Game 2
                         </ButtonComponent>
                     </ListItem>
                     <ListItem>
-                        <ButtonComponent onClick={() => setGame(3)}>
+                        <ButtonComponent
+                            onClick={() =>
+                                dispatch({ type: 'change', game: 3 })
+                            }
+                        >
                             Game 3
                         </ButtonComponent>
                     </ListItem>
