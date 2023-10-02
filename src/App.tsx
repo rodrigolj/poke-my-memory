@@ -1,23 +1,27 @@
-import { useState } from 'react'
-import { Header as Nav } from './components/Header'
-import { Content } from './pages/Content'
-import styled from 'styled-components'
+import { GamesProvider } from 'utils/GamesContext';
+import { Nav } from './components/Nav';
+import { Content } from './pages/Content';
+import styled from 'styled-components';
+import { MenuProvider } from 'utils/MenuContext';
 
 const Wrap = styled.div`
-background: #0A285F;
-height: 100%;
-`
+    background: #0a285f;
+    height: 100%;
+`;
 
 function App() {
-
-    const [gameNumber, setGameNumber] = useState<number>(1);
+    console.log('App render');
 
     return (
-        <Wrap>
-            <Nav gameNumber={gameNumber} setGameNumber={setGameNumber} />
-            <Content gameNumber={gameNumber} />
-        </Wrap>
-    )
+        <MenuProvider>
+            <GamesProvider>
+                <Wrap>
+                    <Nav />
+                    <Content />
+                </Wrap>
+            </GamesProvider>
+        </MenuProvider>
+    );
 }
 
-export default App
+export default App;

@@ -2,6 +2,7 @@ import '@total-typescript/ts-reset';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TextInput from '../components/TextInput';
+import { useMenuContext } from '../utils/MenuContext';
 
 const Container = styled.div`
     display: grid;
@@ -20,7 +21,7 @@ const Section = styled.div`
     align-items: center;
     padding: 1rem;
     min-height: 4rem;
-    overflow: hidden;
+    overflow: auto;
 `;
 
 const Title = styled.h1`
@@ -96,8 +97,8 @@ export const Game1 = () => {
 
     // Defining queue and checking if same Pokémon
     // wasn't selected before
-    let pokemonQueue: Array<Pokemon> = [];
-    let usedNumbers: Array<number> = [];
+    const pokemonQueue: Array<Pokemon> = [];
+    const usedNumbers: Array<number> = [];
 
     // Fetching the id and the image of the Pokémon
     async function fetchPokemon(randomId: number): Promise<Pokemon> {
@@ -155,7 +156,7 @@ export const Game1 = () => {
                 setIsPokemonLoaded(true);
             });
         }
-    });
+    }, [isPokemonLoaded]);
 
     // States that run the game
     const [input, setInput] = useState('');
@@ -164,7 +165,7 @@ export const Game1 = () => {
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault;
-        let value = event.target.value;
+        const value = event.target.value;
         setInput(value);
         value.split('').map((letter: string, index: number) => {
             letter === pokemon.name.split('')[index]
@@ -180,7 +181,7 @@ export const Game1 = () => {
     };
 
     const toProperCase = function (name: string) {
-        if (!!name) {
+        if (name) {
             return name[0].toUpperCase() + name.substring(1).toLowerCase();
         }
     };
