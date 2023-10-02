@@ -2,6 +2,7 @@ import { Game1 } from './Game1';
 import { Game2 } from './Game2';
 import { Game3 } from './Game3';
 import styled from 'styled-components';
+import { useGames } from 'utils/GamesContext';
 
 const Container = styled.div`
     display: flex;
@@ -13,12 +14,13 @@ const Container = styled.div`
 `;
 
 export function Content() {
+    const gameNumber = useGames();
     return (
         <>
             <Container>
-                {gameNumber === 1 ? (
+                {gameNumber.game === 1 ? (
                     <Game1 />
-                ) : gameNumber === 2 ? (
+                ) : gameNumber.game === 2 ? (
                     <Game2 />
                 ) : (
                     <Game3 />

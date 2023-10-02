@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import MenuButton from './MenuButton';
-import { useReducer, useState } from 'react';
+import { useMenuDispatch } from 'utils/MenuContext';
 import { Menu } from './Menu';
 
 const Container = styled.div`
@@ -19,7 +19,7 @@ const Logo = styled.img`
 `;
 
 export const Nav = () => {
-    const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
+    const dispatch = useMenuDispatch();
 
     return (
         <>
@@ -27,11 +27,12 @@ export const Nav = () => {
                 <Logo src="/pokescramble.png" alt="Pokescramble Logo" />
                 <MenuButton
                     color="#0075BE"
-                    isMenuOpen={isMenuOpen}
-                    setMenuOpen={setMenuOpen}
+                    onClick={() => {
+                        dispatch({ type: 'open' });
+                    }}
                 />
             </Container>
-            <Menu isMenuOpen={isMenuOpen} />
+            <Menu />
         </>
     );
 };

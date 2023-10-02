@@ -2,6 +2,7 @@ import '@total-typescript/ts-reset';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TextInput from '../components/TextInput';
+import { useMenuContext } from '../utils/MenuContext';
 
 const Container = styled.div`
     display: grid;

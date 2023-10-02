@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import ButtonComponent from './Button';
 import { useGamesDispatch } from '../utils/GamesContext';
+import { useMenuContext } from '../utils/MenuContext';
 
 const OpaqueBackground = styled.div`
     position: absolute;
@@ -8,14 +9,15 @@ const OpaqueBackground = styled.div`
     width: 100vw;
     overflow: hidden;
 
-    z-index: 1;
     transition: background-color 0.5 ease-in-out;
 
     &.show {
+        z-index: 1;
         background-color: rgba(0, 0, 0, 0.4);
     }
 
     &.hide {
+        z-index: -1;
         background-color: rgba(0, 0, 0, 0);
     }
 `;
@@ -48,15 +50,18 @@ const UnorderedList = styled.ul`
 
 const ListItem = styled.li``;
 
-export function Menu(isMenuOpen: boolean) {
+export function Menu() {
+    const menuContext = useMenuContext();
+    const gameDispatch = useGamesDispatch();
+
     return (
-        <OpaqueBackground className={`${isMenuOpen ? 'show' : 'hide'}`}>
-            <Nav className={`${isMenuOpen ? 'show' : 'hide'}`}>
+        <OpaqueBackground className={`${menuContext.isMenuOpen ? 'show' : 'hide'}`}>
+            <Nav className={`${menuContext.isMenuOpen ? 'show' : 'hide'}`}>
                 <UnorderedList>
                     <ListItem>
                         <ButtonComponent
                             onClick={() =>
-                                dispatch({ type: 'change', game: 1 })
+                                gameDispatch({ type: 'CHANGE_GAME', game: 1 })
                             }
                         >
                             Quem é este Pokémon?
@@ -65,7 +70,7 @@ export function Menu(isMenuOpen: boolean) {
                     <ListItem>
                         <ButtonComponent
                             onClick={() =>
-                                dispatch({ type: 'change', game: 2 })
+                                gameDispatch({ type: 'CHANGE_GAME', game: 2 })
                             }
                         >
                             Game 2
@@ -74,7 +79,7 @@ export function Menu(isMenuOpen: boolean) {
                     <ListItem>
                         <ButtonComponent
                             onClick={() =>
-                                dispatch({ type: 'change', game: 3 })
+                                gameDispatch({ type: 'CHANGE_GAME', game: 3 })
                             }
                         >
                             Game 3

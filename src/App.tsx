@@ -2,6 +2,7 @@ import { GamesProvider } from 'utils/GamesContext';
 import { Nav } from './components/Nav';
 import { Content } from './pages/Content';
 import styled from 'styled-components';
+import { MenuProvider } from 'utils/MenuContext';
 
 const Wrap = styled.div`
     background: #0a285f;
@@ -9,13 +10,17 @@ const Wrap = styled.div`
 `;
 
 function App() {
+    console.log('App render');
+
     return (
-        <GamesProvider>
-            <Wrap>
-                <Nav />
-                <Content />
-            </Wrap>
-        </GamesProvider>
+        <MenuProvider>
+            <GamesProvider>
+                <Wrap>
+                    <Nav />
+                    <Content />
+                </Wrap>
+            </GamesProvider>
+        </MenuProvider>
     );
 }
 

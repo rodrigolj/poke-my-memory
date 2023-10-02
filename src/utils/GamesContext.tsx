@@ -1,9 +1,9 @@
 import { createContext, useContext, useReducer } from 'react';
 
-const GamesContext = createContext<GamesState | null>(null);
+const GamesContext = createContext<GamesState>({ game: 1 });
 
-const GamesDispatchContext = createContext<React.Dispatch<GamesAction> | null>(
-    null
+const GamesDispatchContext = createContext<React.Dispatch<GamesAction>>(
+    () => null
 );
 
 export function GamesProvider({ children }: { children: React.ReactNode }) {
