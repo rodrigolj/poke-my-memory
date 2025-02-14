@@ -55,7 +55,9 @@ export function Menu() {
     const gameDispatch = useGamesDispatch();
 
     return (
-        <OpaqueBackground className={`${menuContext.isMenuOpen ? 'show' : 'hide'}`}>
+        <OpaqueBackground
+            className={`${menuContext.isMenuOpen ? 'show' : 'hide'}`}
+        >
             <Nav className={`${menuContext.isMenuOpen ? 'show' : 'hide'}`}>
                 <UnorderedList>
                     <ListItem>
