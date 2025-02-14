@@ -6,7 +6,7 @@ import { useMenuContext } from '../utils/MenuContext';
 const OpaqueBackground = styled.div`
     position: absolute;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     overflow: hidden;
 
     transition: background-color 0.5 ease-in-out;
