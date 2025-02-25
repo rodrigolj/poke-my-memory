@@ -7,7 +7,7 @@ const GamesDispatchContext = createContext<React.Dispatch<GamesAction>>(
 );
 
 export function GamesProvider({ children }: { children: React.ReactNode }) {
-    const [games, dispatch] = useReducer(gamesReducer, { game: 0 });
+    const [games, dispatch] = useReducer(gamesReducer, { game: 1 });
 
     return (
         <GamesContext.Provider value={games}>
